@@ -69,13 +69,10 @@
       const term = state.query.trim().replace(/[,%()]/g, " ");
       query = query.or("title.ilike.%" + term + "%,summary.ilike.%" + term + "%");
     }
-    if (state.category) {
-      query = query.in("id", db.from("wiki_page_categories").select("page_id").eq("category_id",
-        db.from("wiki_categories").select("id").eq("slug", state.category)));
+    if (!state.category) {
+      query = query.order(state.view === "recent" && !state.query ? "updated_at" : "title", {ascending: !(state.view === "recent" && !state.query)})
+        .range(state.offset, state.offset + PAGE_SIZE - 1);
     }
-    query = query.order(state.view === "recent" && !state.query && !state.category ? "updated_at" : "title", {ascending: !(state.view === "recent" && !state.query && !state.category)})
-      .range(state.offset, state.offset + PAGE_SIZE - 1);
-    // Supabase PostgREST does not support nested query builders in .in(); resolve category ids explicitly.
     if (state.category) {
       const {data: cats} = await db.from("wiki_categories").select("id").eq("slug", state.category).limit(1);
       const catId = cats?.[0]?.id;
