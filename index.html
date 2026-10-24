@@ -17,7 +17,7 @@
     <a class="brand" href="#" id="home-link" aria-label="TDS Wiki home">
       <span class="brand-mark">TDS</span><span>TDS <b>Wiki</b><small>COMMUNITY ENCYCLOPEDIA</small></span>
     </a>
-    <nav><a href="#browse">Browse</a><a href="#about">About</a></nav>
+    <nav><a href="#home" id="nav-home">Home</a><a href="#towers" id="nav-towers">Towers</a><a href="#browse" id="nav-all">All articles</a><a href="#about" id="nav-about">About</a></nav>
   </header>
   <main>
     <section class="hero" id="home">
@@ -28,12 +28,19 @@
         <span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search wiki articles">
         <button type="submit">Search <kbd>↵</kbd></button>
       </form>
+      <div class="hero-actions"><a class="primary-action" href="#towers" id="hero-towers">Explore Towers <span>↗</span></a><a class="secondary-action" href="#browse" id="hero-all">Browse all articles</a></div>
       <div class="hero-meta"><span>COMMUNITY KNOWLEDGE</span><span>•</span><span>ARTICLES WITH SOURCES</span></div>
     </section>
     <section class="stats" aria-label="Wiki status">
       <div><strong id="article-count">—</strong><span>ARTICLES</span></div>
       <div><strong id="category-count">—</strong><span>CATEGORIES</span></div>
       <div><strong id="wiki-status">Connecting…</strong><span>DATABASE</span></div>
+    </section>
+    <section class="towers-intro" id="towers-intro" hidden>
+      <div class="eyebrow"><span class="pulse"></span> TOWER DATABASE</div>
+      <h1>Meet your <span>towers.</span></h1>
+      <p>Explore tower stats, abilities, upgrades and strategies. Choose an article to open its full page.</p>
+      <div class="tower-quick-stats"><span>STARTER TOWERS</span><span>UPGRADES & ABILITIES</span><span>SOURCE-LINKED ARTICLES</span></div>
     </section>
     <section class="content-grid" id="browse">
       <aside class="sidebar">
