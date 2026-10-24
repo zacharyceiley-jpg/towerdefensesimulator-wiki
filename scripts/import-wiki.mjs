@@ -38,11 +38,17 @@ async function api(params, attempt = 0) {
     return api(params,attempt + 1);
   }
 }
+function normalizeHtml(html) {
+  // Keep article links and media pointing to the source wiki instead of broken local /wiki paths.
+  return String(html || "")
+    .replace(/(href|src)=(["'])\\/(wiki|images|mediawiki|w)\\//gi, '$1=$2https://tds.wiki/$3/')
+    .replace(/(href|src)=(["'])\\/load\\.php/gi, '$1=$2https://tds.wiki/load.php');
+}
 async function parsedPage(title) {
   const result = await api({action:"parse",page:title,prop:"text|categories|revid|displaytitle",disableeditsection:1});
   const parse = result.parse;
   const html = typeof parse.text === "string" ? parse.text : parse.text?.["*"] || "";
-  return {html, categories:(parse.categories || []).map(c => typeof c === "string" ? c.replace(/^Category:/,"") : (c["*"] || c.title || "").replace(/^Category:/,""))};
+  return {html:normalizeHtml(html), categories:(parse.categories || []).map(c => typeof c === "string" ? c.replace(/^Category:/,"") : (c["*"] || c.title || "").replace(/^Category:/,""))};
 }
 async function mapLimit(items, limit, fn) {
   const output = new Array(items.length); let next = 0;
@@ -135,8 +141,9 @@ async function main() {
   console.log("Starting resumable import from",API);
   console.log("Batch size:",BATCH_SIZE,"· parse concurrency:",CONCURRENCY);
   while (!stopRequested) {
+    const previousContinue = checkpoint.continue;
     const params = {action:"query",list:"allpages",apnamespace:0,apfilterredir:"all",aplimit:BATCH_SIZE};
-    if (checkpoint.continue) params.apcontinue = checkpoint.continue;
+    if (previousContinue) params.apcontinue = previousContinue;
     const result = await api(params);
     const titles = (result.query?.allpages || []).map(page=>page.title);
     if (!titles.length) break;
@@ -150,11 +157,12 @@ async function main() {
     if (failed.length) checkpoint.failed = [...(checkpoint.failed||[]),...failed].slice(-500);
     const saved = await saveBatch(good);
     checkpoint.imported = (checkpoint.imported||0) + saved.saved;
-    checkpoint.continue = result.continue?.apcontinue || null;
+    // If any page failed, keep this batch as the checkpoint so a rerun retries it.
+    checkpoint.continue = failed.length ? previousContinue : (result.continue?.apcontinue || null);
     checkpoint.lastBatchAt = new Date().toISOString();
     await writeFile(STATE_FILE,JSON.stringify(checkpoint,null,2));
     console.log(`Batch ${checkpoint.imported}: ${saved.saved} saved, ${saved.skipped} preserved, ${failed.length} failed; ${titles[0]} → ${titles.at(-1)}`);
-    if (!checkpoint.continue) break;
+    if (failed.length || !checkpoint.continue) break;
     await pause(400);
   }
   await writeFile(STATE_FILE,JSON.stringify(checkpoint,null,2));
