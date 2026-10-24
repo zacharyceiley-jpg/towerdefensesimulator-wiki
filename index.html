@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101522">
+  <meta name="description" content="A community Tower Defense Simulator wiki.">
+  <title>TDS Wiki</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" id="home-link" aria-label="TDS Wiki home">
+      <span class="brand-mark">TDS</span><span>TDS <b>Wiki</b><small>COMMUNITY ENCYCLOPEDIA</small></span>
+    </a>
+    <nav><a href="#browse">Browse</a><a href="#about">About</a></nav>
+  </header>
+  <main>
+    <section class="hero" id="home">
+      <div class="eyebrow"><span class="pulse"></span> THE TOWER DEFENSE SIMULATOR ENCYCLOPEDIA</div>
+      <h1>Know your towers.<br><span>Master every wave.</span></h1>
+      <p>A community-built reference for towers, enemies, maps, strategies and everything TDS.</p>
+      <form class="searchbar" id="search-form" role="search">
+        <span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search wiki articles">
+        <button type="submit">Search <kbd>↵</kbd></button>
+      </form>
+      <div class="hero-meta"><span>COMMUNITY KNOWLEDGE</span><span>•</span><span>ARTICLES WITH SOURCES</span></div>
+    </section>
+    <section class="stats" aria-label="Wiki status">
+      <div><strong id="article-count">—</strong><span>ARTICLES</span></div>
+      <div><strong id="category-count">—</strong><span>CATEGORIES</span></div>
+      <div><strong id="wiki-status">Connecting…</strong><span>DATABASE</span></div>
+    </section>
+    <section class="content-grid" id="browse">
+      <aside class="sidebar">
+        <div class="section-label">EXPLORE</div>
+        <button class="side-link active" data-view="recent">✦ <span>Recently updated</span></button>
+        <button class="side-link" data-view="all">▦ <span>All articles</span></button>
+        <div class="section-label category-heading">CATEGORIES</div>
+        <div id="category-list" class="category-list"><p class="muted">Loading categories…</p></div>
+        <div class="sidebar-note"><span>✎</span><b>Community project</b><p>Built for TDS players, by TDS players. Source credits stay attached to imported pages.</p></div>
+      </aside>
+      <section class="article-area">
+        <div class="section-head"><div><div class="section-label" id="results-kicker">THE LIBRARY</div><h2 id="results-title">Recently updated</h2></div><span id="results-count" class="muted"></span></div>
+        <div id="notice" class="notice" hidden></div>
+        <div id="article-list" class="article-list"><div class="loading"><span class="spinner"></span> Connecting to the wiki database…</div></div>
+        <div class="pagination"><button id="load-more" hidden>Load more articles <span>↓</span></button></div>
+      </section>
+    </section>
+    <section class="article-view" id="article-view" hidden>
+      <button class="back-button" id="back-button">← Back to articles</button>
+      <article id="article-content"></article>
+    </section>
+    <section id="about" class="about">
+      <div><div class="section-label">ABOUT THIS PROJECT</div><h2>A fresh start for TDS knowledge.</h2></div>
+      <p>This independent community wiki is built from scratch. Imported material keeps a link to its original source and revision information. Tower Defense Simulator and related assets belong to their respective owners.</p>
+    </section>
+  </main>
+  <footer><span>© TDS Wiki Community</span><span>Independent fan project · Not affiliated with Paradoxum Games</span><a href="https://tds.wiki/" target="_blank" rel="noopener noreferrer">Original wiki ↗</a></footer>
+</body>
+</html>
