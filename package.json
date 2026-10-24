@@ -1,0 +1,13 @@
+{
+  "name": "towerdefensesimulator-wiki",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "import:wiki": "node scripts/import-wiki.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.0",
+    "dotenv": "^16.6.1"
+  }
+}
