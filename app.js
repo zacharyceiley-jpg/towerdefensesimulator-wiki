@@ -138,7 +138,12 @@
     const {data: page,error} = await db.from("wiki_pages").select("*").eq("slug",slug).limit(1).maybeSingle();
     if (error || !page) { showNotice("That article could not be opened. Try again."); return; }
     $("browse").hidden = true; $("home").hidden = true; $("stats").hidden = true; $("towers-intro").hidden = true; $("article-view").hidden = false; $("about").hidden = true;
-    const html = window.DOMPurify ? DOMPurify.sanitize(page.content_html || "", {USE_PROFILES:{html:true}, ADD_ATTR:["class","colspan","rowspan","align","width","height"]}) : esc(page.content_wikitext || "This article has not been imported yet.").replace(/\n/g,"<br>");
+    const html = window.DOMPurify ? DOMPurify.sanitize(page.content_html || "", {
+      USE_PROFILES: {html:true},
+      ADD_ATTR: ["class","colspan","rowspan","align","width","height","title","aria-label"],
+      FORBID_ATTR: ["style","id","srcset"],
+      FORBID_TAGS: ["style","script","iframe","form","input","button","object","embed","link","meta"]
+    }) : "<p>" + esc(page.summary || page.content_wikitext || "This article has not been imported yet.") + "</p>";
     const source = page.source_url ? '<a href="' + esc(page.source_url) + '" target="_blank" rel="noopener noreferrer">View original article ↗</a>' : "Community-created article";
     const revision = page.source_revision_id ? " · Source revision " + esc(page.source_revision_id) : "";
     $("article-content").innerHTML = '<div class="wiki-article"><h1>' + esc(page.title) + '</h1><div class="article-source">' + source + revision + (page.source_timestamp ? " · Source updated " + esc(niceDate(page.source_timestamp)) : "") + '</div><div class="wiki-body">' + (html || '<p>This article has no imported content yet.</p>') + '</div><p class="article-source">Tower Defense Simulator is owned by its respective creators. Imported content is credited to its source; see the repository README for attribution and license notes.</p></div>';
