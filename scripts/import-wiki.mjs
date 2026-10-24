@@ -41,8 +41,8 @@ async function api(params, attempt = 0) {
 function normalizeHtml(html) {
   // Keep article links and media pointing to the source wiki instead of broken local /wiki paths.
   return String(html || "")
-    .replace(/(href|src)=(["'])\\/(wiki|images|mediawiki|w)\\//gi, '$1=$2https://tds.wiki/$3/')
-    .replace(/(href|src)=(["'])\\/load\\.php/gi, '$1=$2https://tds.wiki/load.php');
+    .replace(/(href|src)=(["'])\/(wiki|images|mediawiki|w)\//gi, '$1=$2https://tds.wiki/$3/')
+    .replace(/(href|src)=(["'])\/load\.php/gi, '$1=$2https://tds.wiki/load.php');
 }
 async function parsedPage(title) {
   const result = await api({action:"parse",page:title,prop:"text|categories|revid|displaytitle",disableeditsection:1});
