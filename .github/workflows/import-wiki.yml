@@ -1,0 +1,43 @@
+name: Import TDS Wiki articles
+on:
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "Articles per API batch (5–50)"
+        required: false
+        default: "25"
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Restore importer checkpoint
+        uses: actions/cache/restore@v4
+        with:
+          path: import-state.json
+          key: tds-wiki-import-${{ github.run_id }}
+          restore-keys: tds-wiki-import-
+      - name: Import source articles
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          MEDIAWIKI_API_URL: https://tds.wiki/api.php
+          IMPORT_BATCH_SIZE: ${{ inputs.batch_size }}
+          IMPORT_CONCURRENCY: "2"
+        run: npm run import:wiki
+      - name: Save importer checkpoint
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: import-state.json
+          key: tds-wiki-import-${{ github.run_id }}
