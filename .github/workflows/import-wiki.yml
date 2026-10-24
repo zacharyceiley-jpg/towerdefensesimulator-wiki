@@ -1,5 +1,9 @@
 name: Import TDS Wiki articles
 on:
+  push:
+    paths:
+      - 'scripts/import-wiki.mjs'
+      - '.github/workflows/import-wiki.yml'
   workflow_dispatch:
     inputs:
       batch_size:
