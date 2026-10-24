@@ -128,7 +128,7 @@
     $("load-more").disabled = false;
     $("load-more").textContent = "Load more articles ↓";
     $("results-count").textContent = count != null ? count + " results" : (state.offset ? "Showing " + state.offset : "");
-    $("results-title").textContent = state.query ? 'Search results' : state.category ? 'Category: ' + state.category.replace(/-/g," ") : state.view === "all" ? "All articles" : "Recently updated";
+    $("results-title").textContent = state.query ? 'Search results' : state.category === "towers" ? "All towers" : state.category ? 'Category: ' + state.category.replace(/-/g," ") : state.view === "all" ? "All articles" : "Recently updated";
     $("results-kicker").textContent = state.query ? "SEARCH" : state.category ? "CATEGORY" : "THE LIBRARY";
     state.loading = false;
     setActive();
@@ -172,5 +172,14 @@
   const hash = decodeURIComponent(location.hash || "");
   const articleMatch = hash.match(/^#article\/(.+)$/);
   if (articleMatch) { init().then(() => openArticle(articleMatch[1])); }
-  else { const searchMatch = hash.match(/^#search\/(.*)$/); if (searchMatch) { state.query=searchMatch[1];$("search-input").value=state.query;state.view="all"; } init(); }
+  else {
+    if (hash === "#towers") {
+      state.page = "towers"; state.category = "towers"; state.view = "all";
+      $("home").hidden = true; $("stats").hidden = true; $("towers-intro").hidden = false; $("about").hidden = true;
+    }
+    const searchMatch = hash.match(/^#search\/(.*)$/);
+    if (searchMatch) { state.query=searchMatch[1];$("search-input").value=state.query;state.view="all";state.page="all"; }
+    if (hash === "#browse") { state.page="all"; state.view="all"; }
+    init();
+  }
 })();
