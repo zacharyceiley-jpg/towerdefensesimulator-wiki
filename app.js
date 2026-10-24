@@ -5,7 +5,7 @@
   const PAGE_SIZE = 12;
   const db = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
   const $ = (id) => document.getElementById(id);
-  const state = { view: "recent", query: "", category: "", offset: 0, loading: false, hasMore: true, request: 0 };
+  const state = { view: "recent", query: "", category: "", offset: 0, loading: false, hasMore: true, request: 0, page: "home" };
 
   const esc = (value = "") => String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const slugify = (value = "") => value.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -49,6 +49,26 @@
       state.view = "all";
       loadArticles(true);
     }));
+  }
+
+  function setPage(page) {
+    state.page = page;
+    const towers = page === "towers";
+    $("home").hidden = towers;
+    $("stats").hidden = towers;
+    $("towers-intro").hidden = !towers;
+    $("browse").hidden = false;
+    $("about").hidden = towers;
+    $("article-view").hidden = true;
+    document.querySelectorAll(".topbar nav a").forEach(a => a.classList.toggle("active-nav",
+      (towers && a.id === "nav-towers") || (page === "home" && a.id === "nav-home")));
+    if (towers) {
+      state.category = "towers";
+      state.query = "";
+      state.view = "all";
+      $("search-input").value = "";
+    }
+    history.replaceState(null, "", towers ? "#towers" : page === "all" ? "#browse" : "#home");
   }
 
   async function loadArticles(reset = false) {
@@ -117,7 +137,7 @@
   async function openArticle(slug) {
     const {data: page,error} = await db.from("wiki_pages").select("*").eq("slug",slug).limit(1).maybeSingle();
     if (error || !page) { showNotice("That article could not be opened. Try again."); return; }
-    $("browse").hidden = true; $("home").hidden = true; $("article-view").hidden = false; $("about").hidden = true;
+    $("browse").hidden = true; $("home").hidden = true; $("stats").hidden = true; $("towers-intro").hidden = true; $("article-view").hidden = false; $("about").hidden = true;
     const html = window.DOMPurify ? DOMPurify.sanitize(page.content_html || "", {USE_PROFILES:{html:true}, ADD_ATTR:["class","colspan","rowspan","align","width","height"]}) : esc(page.content_wikitext || "This article has not been imported yet.").replace(/\n/g,"<br>");
     const source = page.source_url ? '<a href="' + esc(page.source_url) + '" target="_blank" rel="noopener noreferrer">View original article ↗</a>' : "Community-created article";
     const revision = page.source_revision_id ? " · Source revision " + esc(page.source_revision_id) : "";
@@ -127,22 +147,28 @@
   }
 
   function showLibrary() {
-    $("browse").hidden = false; $("home").hidden = false; $("article-view").hidden = true; $("about").hidden = false;
-    history.replaceState(null,"",state.query ? "#search/" + encodeURIComponent(state.query) : "#browse");
+    $("browse").hidden = false; $("home").hidden = state.page === "towers"; $("stats").hidden = state.page === "towers"; $("towers-intro").hidden = state.page !== "towers"; $("article-view").hidden = true; $("about").hidden = state.page === "towers";
+    history.replaceState(null,"",state.page === "towers" ? "#towers" : state.query ? "#search/" + encodeURIComponent(state.query) : "#browse");
     window.scrollTo({top:0,behavior:"smooth"});
   }
 
   $("search-form").addEventListener("submit", event => {
     event.preventDefault();
-    state.query = $("search-input").value.trim(); state.category = ""; state.view = "all"; loadArticles(true);
+    state.query = $("search-input").value.trim(); state.category = ""; state.view = "all"; state.page = "all"; setPage("all"); loadArticles(true);
     $("browse").scrollIntoView({behavior:"smooth"});
   });
   $("load-more").addEventListener("click", () => loadArticles(false));
   $("back-button").addEventListener("click", showLibrary);
-  $("home-link").addEventListener("click", event => { event.preventDefault(); state.query="";state.category="";state.view="recent";$("search-input").value="";showLibrary();loadArticles(true); });
+  $("home-link").addEventListener("click", event => { event.preventDefault(); state.query="";state.category="";state.view="recent";state.page="home";$("search-input").value="";showLibrary();loadArticles(true); });
+  $("nav-home").addEventListener("click", event => { event.preventDefault(); state.page="home";state.query="";state.category="";state.view="recent";$("search-input").value="";showLibrary();loadArticles(true); });
+  $("nav-towers").addEventListener("click", event => { event.preventDefault(); setPage("towers");loadArticles(true);window.scrollTo({top:0,behavior:"smooth"}); });
+  $("hero-towers").addEventListener("click", event => { event.preventDefault(); setPage("towers");loadArticles(true);window.scrollTo({top:0,behavior:"smooth"}); });
+  $("nav-all").addEventListener("click", event => { event.preventDefault(); state.page="all";state.category="";state.query="";state.view="all";$("search-input").value="";showLibrary();loadArticles(true); });
+  $("hero-all").addEventListener("click", event => { event.preventDefault(); state.page="all";state.category="";state.query="";state.view="all";$("search-input").value="";showLibrary();loadArticles(true); });
   document.querySelectorAll(".side-link").forEach(button => button.addEventListener("click", () => {
-    state.view = button.dataset.view; state.query = ""; state.category = ""; $("search-input").value = ""; loadArticles(true);
+    state.view = button.dataset.view; state.query = ""; state.category = ""; state.page = "all"; setPage("all"); $("search-input").value = ""; loadArticles(true);
   }));
+  $("stats").hidden = false;
   const hash = decodeURIComponent(location.hash || "");
   const articleMatch = hash.match(/^#article\/(.+)$/);
   if (articleMatch) { init().then(() => openArticle(articleMatch[1])); }
