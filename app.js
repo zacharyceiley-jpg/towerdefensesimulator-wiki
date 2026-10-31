@@ -18,6 +18,7 @@ async function init(){
  $("auth-button").addEventListener("click",authAction);
  $("search-form").addEventListener("submit",e=>{e.preventDefault();state.query=$("search-input").value.trim();state.category="";state.view="all";loadArticles(true);$("browse").scrollIntoView({behavior:"smooth"});});
  $("load-more").addEventListener("click",()=>loadArticles(false));
+ document.querySelectorAll(".side-link").forEach(b=>b.addEventListener("click",()=>{state.view=b.dataset.view;state.category="";state.query="";$("search-input").value="";loadArticles(true);}));
  $("back-button").addEventListener("click",showLibrary);
  $("home-link").addEventListener("click",e=>{e.preventDefault();state.query="";state.category="";state.view="recent";$("search-input").value="";showLibrary();loadArticles(true);});
  $("nav-home").addEventListener("click",e=>{e.preventDefault();showLibrary();});
@@ -91,7 +92,7 @@ function expandTemplates(source,depth=0){
  return String(source||"").replace(/\{\{([^{}]+)\}\}/g,(_whole,inside)=>{
   const parts=inside.split("|"),name=parts.shift().trim().toLowerCase().replace(/^template:/,"");
   const t=state.templates.find(x=>x.slug===slugify(name)||x.name.toLowerCase()===name);
-  if(!t)return '<span class="missing-template">Template:'+esc(name)+'</span>';
+  if(!t)return "[Missing template: "+name+"]";
   const params={};let positional=1;
   parts.forEach(part=>{const eq=part.indexOf("=");if(eq>=0)params[part.slice(0,eq).trim()]=part.slice(eq+1).trim();else params[String(positional++)]=part.trim();});
   const body=t.content_wikitext.replace(/\{\{\{([^{}]+)\}\}\}/g,(_m,raw)=>{const bits=raw.split("|"),key=bits.shift().trim();return params[key]??bits.join("|");});
@@ -137,10 +138,10 @@ function showLibrary(){
  state.currentPage=null;renderAuth();hide("article-view");hide("editor-panel");hide("template-panel");show("home");show("stats");show("browse");show("about");
  history.replaceState(null,"",state.query?"#search/"+encodeURIComponent(state.query):"#browse");window.scrollTo({top:0,behavior:"smooth"});
 }
-function openPageEditor(page=null){
+async function openPageEditor(page=null){
  if(!state.isOwner)return;state.currentPage=page;$("editor-heading").textContent=page?"Edit "+page.title:"Create article";
  $("page-title").value=page?.title||"";$("page-summary").value=page?.summary||"";$("page-wikitext").value=page?.content_wikitext||"";
- $("edit-summary").value="";$("page-categories").value="";$("delete-page-button").hidden=!page;
+$("page-categories").value="";if(page){const {data:links}=await db.from("wiki_page_categories").select("category_id").eq("page_id",page.id);const ids=(links||[]).map(x=>x.category_id);if(ids.length){const {data:cats}=await db.from("wiki_categories").select("name").in("id",ids);$("page-categories").value=(cats||[]).map(x=>x.name).join(", ");}}$("delete-page-button").hidden=!page;
  hide("article-view");hide("template-panel");show("editor-panel");window.scrollTo({top:0,behavior:"smooth"});
 }
 async function savePage(e){
