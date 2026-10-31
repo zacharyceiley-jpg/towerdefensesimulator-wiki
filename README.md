@@ -44,3 +44,24 @@ The renderer treats article content as text and generates safe HTML. It does not
 
 ## Attribution
 This is an independent fan project and is not affiliated with Paradoxum Games. Tower Defense Simulator names, logos, images, and other game assets belong to their respective owners. Retain source and license attribution for third-party material.
+
+
+## Repository-backed wikitext articles
+
+Repository articles are plain UTF-8 .wiki files inside the articles/ folder. The website reads articles/index.json and fetches the listed files from GitHub Pages. You do not need GitHub OAuth or Supabase sign-in to publish these articles.
+
+To add an article:
+1. Create a file such as articles/Scout.wiki.
+2. Add an entry to articles/index.json:
+   {
+     "title": "Scout",
+     "slug": "scout",
+     "summary": "A short article summary.",
+     "categories": ["Towers"],
+     "path": "articles/Scout.wiki"
+   }
+3. Commit the changes. GitHub Pages redeploys the site and the article appears in the article list and search.
+
+Templates work the same way: create .wiki files in templates/ and register them in templates/index.json with name, slug, summary, and path. Articles can call templates with {{TemplateName|parameter=value}}.
+
+The site also continues to display content stored in Supabase. Repository files take precedence when an article and database page share the same slug. The Supabase editor remains owner-only and is separate from the direct GitHub file workflow.

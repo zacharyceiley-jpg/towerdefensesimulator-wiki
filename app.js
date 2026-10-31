@@ -2,7 +2,7 @@
 const SUPABASE_URL="https://tztevpmknztxjsfwyhep.supabase.co";
 const SUPABASE_KEY="sb_publishable_OHajZSxF47-EiH39VcNqiQ__TslGlz5";
 const db=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY),$=id=>document.getElementById(id),PAGE_SIZE=15;
-const state={user:null,isOwner:false,view:"recent",query:"",category:"",offset:0,hasMore:true,loading:false,currentPage:null,templates:[],currentTemplate:null};
+const state={user:null,isOwner:false,view:"recent",query:"",category:"",offset:0,hasMore:true,loading:false,currentPage:null,templates:[],currentTemplate:null,repositoryArticles:[],repositoryTemplates:[]};
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const slugify=v=>String(v||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const dateText=v=>v?new Date(v).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}):"—";
@@ -14,7 +14,7 @@ async function init(){
  $("wiki-status").textContent="Online";
  const {data:{session}}=await db.auth.getSession();state.user=session?.user||null;await refreshOwner();
  db.auth.onAuthStateChange(async(_event,s)=>{state.user=s?.user||null;await refreshOwner();});
- await loadTemplates();await Promise.all([loadCategories(),loadArticles(true)]);
+ await loadRepositoryContent();await loadTemplates();await Promise.all([loadCategories(),loadArticles(true)]);
  $("auth-button").addEventListener("click",authAction);
  $("search-form").addEventListener("submit",e=>{e.preventDefault();state.query=$("search-input").value.trim();state.category="";state.view="all";loadArticles(true);$("browse").scrollIntoView({behavior:"smooth"});});
  $("load-more").addEventListener("click",()=>loadArticles(false));
@@ -44,7 +44,9 @@ function renderAuth(){
  $("auth-label").textContent=state.user?(state.isOwner?"Wiki owner":"Signed in · read only"):"Read-only visitor";
  $("auth-button").textContent=state.user?"Sign out":"Sign in with GitHub";
  $("new-page-button").hidden=!state.isOwner;$("nav-templates").hidden=!state.isOwner;
- $("edit-page-button").hidden=!state.isOwner||!state.currentPage;
+ $("edit-page-button").hidden=!state.isOwner||!state.currentPage||state.currentPage.source==="repo";
+ $("repo-edit-link").hidden=state.currentPage?.source!=="repo";
+ if(state.currentPage?.source==="repo")$("repo-edit-link").href="https://github.com/zacharyceiley-jpg/towerdefensesimulator-wiki/edit/main/"+state.currentPage.path.split("/").map(encodeURIComponent).join("/");
  $("delete-page-button").hidden=!state.isOwner||!state.currentPage;
 }
 async function authAction(){
@@ -52,40 +54,64 @@ async function authAction(){
  const {error}=await db.auth.signInWithOAuth({provider:"github",options:{redirectTo:window.location.href.split("#")[0]}});
  if(error)notice("GitHub sign-in could not start: "+error.message+". Check that GitHub is enabled in Supabase Auth.");
 }
+async function loadRepositoryContent(){
+ const readManifest=async path=>{try{const r=await fetch(new URL(path,document.baseURI),{cache:"no-store"});if(!r.ok)return [];const j=await r.json();return Array.isArray(j)?j:[];}catch(_){return [];}};
+ state.repositoryArticles=await readManifest("articles/index.json");
+ state.repositoryTemplates=await readManifest("templates/index.json");
+}
 async function loadTemplates(){
  const {data,error}=await db.from("wiki_templates").select("id,name,slug,content_wikitext,summary,updated_at").order("name").limit(300);
- if(error){state.templates=[];$("template-count").textContent="0";return;}
- state.templates=data||[];$("template-count").textContent=String(state.templates.length);
+ const fromDb=error?[]:(data||[]);
+ const fromRepo=await Promise.all(state.repositoryTemplates.map(async t=>{
+  if(!t||typeof t.name!=="string"||typeof t.path!=="string"||!/^templates\/[a-zA-Z0-9_./-]+\.wiki$/.test(t.path)||t.path.includes(".."))return null;
+  try{const r=await fetch(new URL(t.path,document.baseURI),{cache:"no-store"});if(!r.ok)return null;return {...t,content_wikitext:await r.text(),source:"repo"};}catch(_){return null;}
+ }));
+ const bySlug=new Map();fromDb.forEach(t=>bySlug.set(t.slug,t));fromRepo.filter(Boolean).forEach(t=>bySlug.set(t.slug||slugify(t.name),{...t,slug:t.slug||slugify(t.name)}));
+ state.templates=[...bySlug.values()].sort((a,b)=>a.name.localeCompare(b.name));
+ $("template-count").textContent=String(state.templates.length);
 }
 async function loadCategories(){
  const {data,error}=await db.from("wiki_categories").select("id,name,slug").order("name").limit(100);
- if(error){$("category-list").innerHTML='<p class="muted">Categories unavailable.</p>';return;}
- $("category-list").innerHTML=(data||[]).map(c=>'<button class="category-button" data-category="'+esc(c.slug)+'">'+esc(c.name)+'</button>').join("")||'<p class="muted">No categories yet.</p>';
+ const all=new Map();(error?[]:(data||[])).forEach(c=>all.set(c.slug,c));
+ state.repositoryArticles.forEach(p=>(p.categories||[]).forEach(name=>{const slug=slugify(name);if(slug&&!all.has(slug))all.set(slug,{name,slug});}));
+ const categories=[...all.values()].sort((a,b)=>a.name.localeCompare(b.name));
+ $("category-list").innerHTML=categories.map(c=>'<button class="category-button" data-category="'+esc(c.slug)+'">'+esc(c.name)+'</button>').join("")||'<p class="muted">No categories yet.</p>';
  $("category-list").querySelectorAll("[data-category]").forEach(b=>b.addEventListener("click",()=>{state.category=b.dataset.category;state.query="";state.view="all";$("search-input").value="";loadArticles(true);}));
 }
 async function loadArticles(reset=false){
- if(state.loading)return;if(reset){state.offset=0;state.hasMore=true;}if(!state.hasMore)return;
+ if(state.loading)return;
+ if(reset){state.offset=0;state.hasMore=true;}
+ if(!state.hasMore)return;
  state.loading=true;$("load-more").disabled=true;
  if(reset)$("article-list").innerHTML='<div class="loading"><span class="spinner"></span> Loading articles…</div>';
- let q=db.from("wiki_pages").select("id,title,slug,summary,updated_at").order(state.view==="recent"&&!state.query&&!state.category?"updated_at":"title",{ascending:!(state.view==="recent"&&!state.query&&!state.category)});
- if(state.query){const term=state.query.replace(/[,%()]/g," ").trim();q=q.or("title.ilike.%"+term+"%,summary.ilike.%"+term+"%");}
+ let dbRows=[];
+ const {data:pageData,error:pageError}=await db.from("wiki_pages").select("id,title,slug,summary,updated_at").order("updated_at",{ascending:false}).limit(1000);
+ if(!pageError)dbRows=(pageData||[]).map(p=>({...p,source:"database"}));
+ let categoryPageIds=null;
  if(state.category){
-  const {data:cats}=await db.from("wiki_categories").select("id").eq("slug",state.category).limit(1);
-  const {data:links}=cats?.[0]?await db.from("wiki_page_categories").select("page_id").eq("category_id",cats[0].id).range(0,999):{data:[]};
-  const ids=(links||[]).map(x=>x.page_id);if(!ids.length)q=null;else q=q.in("id",ids);
+  const {data:cat}=await db.from("wiki_categories").select("id").eq("slug",state.category).limit(1);
+  if(cat?.[0]){
+   const {data:links}=await db.from("wiki_page_categories").select("page_id").eq("category_id",cat[0].id).range(0,999);
+   categoryPageIds=new Set((links||[]).map(x=>x.page_id));
+  }else categoryPageIds=new Set();
  }
- let data=[],error=null;if(q)({data,error}=await q.range(state.offset,state.offset+PAGE_SIZE-1));
- if(error){$("article-list").innerHTML='<div class="error-state">Could not load articles: '+esc(error.message)+'</div>';$("wiki-status").textContent="Check setup";state.loading=false;return;}
- data=data||[];if(reset)$("article-list").innerHTML="";
- if(!data.length&&reset)$("article-list").innerHTML='<div class="empty-state"><strong>No articles yet.</strong><p>The database is ready. Sign in with the owner GitHub account to create the first page.</p></div>';
- else{
-  $("article-list").insertAdjacentHTML("beforeend",data.map(p=>'<button class="article-card" data-slug="'+esc(p.slug)+'"><span class="article-icon">✦</span><span class="article-card-copy"><h3>'+esc(p.title)+'</h3><p>'+esc(p.summary||"Open this wiki article.")+'</p><span class="card-meta"><span>WIKI ARTICLE</span><span>UPDATED '+esc(dateText(p.updated_at))+'</span></span></span><span class="card-arrow">›</span></button>').join(""));
+ const repoRows=state.repositoryArticles.filter(p=>p&&typeof p.title==="string"&&typeof p.path==="string"&&/^articles\/[a-zA-Z0-9_./-]+\.wiki$/.test(p.path)&&!p.path.includes("..")).map(p=>({...p,slug:p.slug||slugify(p.title),source:"repo"}));
+ const bySlug=new Map();repoRows.forEach(p=>bySlug.set(p.slug,p));dbRows.forEach(p=>{if(!bySlug.has(p.slug))bySlug.set(p.slug,p);});
+ let rows=[...bySlug.values()];
+ if(state.query){const term=state.query.toLocaleLowerCase();rows=rows.filter(p=>(p.title||"").toLocaleLowerCase().includes(term)||(p.summary||"").toLocaleLowerCase().includes(term));}
+ if(state.category)rows=rows.filter(p=>p.source==="repo"?(p.categories||[]).some(c=>slugify(c)===state.category):categoryPageIds?.has(p.id));
+ rows.sort((a,b)=>state.view==="recent"&&!state.query&&!state.category?new Date(b.updated_at||0)-new Date(a.updated_at||0):(a.title||"").localeCompare(b.title||""));
+ if(reset)$("article-list").innerHTML="";
+ const data=rows.slice(state.offset,state.offset+PAGE_SIZE);
+ if(!data.length&&reset)$("article-list").innerHTML='<div class="empty-state"><strong>No repository articles yet.</strong><p>Add a .wiki file inside <code>articles/</code> and register it in <code>articles/index.json</code>. It will appear here after the site redeploys.</p></div>';
+ else if(data.length){
+  $("article-list").insertAdjacentHTML("beforeend",data.map(p=>'<button class="article-card" data-slug="'+esc(p.slug)+'"><span class="article-icon">✦</span><span class="article-card-copy"><h3>'+esc(p.title)+'</h3><p>'+esc(p.summary||"Open this wiki article.")+'</p><span class="card-meta"><span>'+(p.source==="repo"?"GITHUB ARTICLE":"DATABASE ARTICLE")+'</span><span>UPDATED '+esc(dateText(p.updated_at))+'</span></span></span><span class="card-arrow">›</span></button>').join(""));
   $("article-list").querySelectorAll("[data-slug]").forEach(b=>b.addEventListener("click",()=>openArticle(b.dataset.slug)));
  }
- state.offset+=data.length;state.hasMore=data.length===PAGE_SIZE;$("load-more").hidden=!state.hasMore;$("load-more").disabled=false;
+ state.offset+=data.length;state.hasMore=state.offset<rows.length;$("load-more").hidden=!state.hasMore;$("load-more").disabled=false;
  $("results-title").textContent=state.query?"Search results":state.category?"Category: "+state.category.replace(/-/g," "):state.view==="all"?"All articles":"Recently updated";
- $("results-count").textContent=state.offset+" shown";$("results-kicker").textContent=state.query?"SEARCH":state.category?"CATEGORY":"THE LIBRARY";
- $("article-count").textContent=String(state.offset);state.loading=false;
+ $("results-count").textContent=rows.length+" articles";$("results-kicker").textContent=state.query?"SEARCH":state.category?"CATEGORY":"THE LIBRARY";
+ $("article-count").textContent=String(rows.length);state.loading=false;
 }
 function expandTemplates(source,depth=0){
  if(depth>8)return source;
@@ -124,13 +150,25 @@ function inlineMarkup(value){
 async function openArticle(slug){
  hide("home");hide("stats");hide("browse");hide("about");hide("editor-panel");hide("template-panel");show("article-view");
  $("article-content").innerHTML='<div class="loading">Loading article…</div>';
- const {data:p,error}=await db.from("wiki_pages").select("*").eq("slug",slug).maybeSingle();
- if(error||!p){$("article-content").innerHTML='<div class="empty-state">This article could not be found.</div>';return;}
+ const repoPage=state.repositoryArticles.find(p=>(p.slug||slugify(p.title))===slug);
+ let p=null;
+ if(repoPage&&typeof repoPage.path==="string"&&/^articles\/[a-zA-Z0-9_./-]+\.wiki$/.test(repoPage.path)&&!repoPage.path.includes("..")){
+  try{const r=await fetch(new URL(repoPage.path,document.baseURI),{cache:"no-store"});if(r.ok)p={...repoPage,slug:repoPage.slug||slugify(repoPage.title),content_wikitext:await r.text(),source:"repo",updated_at:repoPage.updated_at||null,path:repoPage.path};}catch(_){}
+ }
+ if(!p){
+  const {data,error}=await db.from("wiki_pages").select("*").eq("slug",slug).maybeSingle();
+  if(error||!data){$("article-content").innerHTML='<div class="empty-state">This article could not be found.</div>';return;}
+  p={...data,source:"database"};
+ }
  state.currentPage=p;renderAuth();
- const {data:links}=await db.from("wiki_page_categories").select("category_id").eq("page_id",p.id);
- const ids=(links||[]).map(x=>x.category_id),{data:cats}=ids.length?await db.from("wiki_categories").select("name").in("id",ids):{data:[]};
- const catHtml=(cats||[]).map(c=>'<span class="article-category">'+esc(c.name)+'</span>').join("");
- $("article-content").innerHTML='<div class="wiki-article"><h1>'+esc(p.title)+'</h1><div class="article-source">Updated '+esc(dateText(p.updated_at))+' · '+(catHtml||"Uncategorised")+'</div><div class="wiki-body">'+renderWikitext(p.content_wikitext||"")+'</div><div class="article-source">Independent community wiki · Tower Defense Simulator belongs to its respective creators.</div></div>';
+ let catHtml="";
+ if(p.source==="repo")catHtml=(p.categories||[]).map(name=>'<span class="article-category">'+esc(name)+'</span>').join("");
+ else{
+  const {data:links}=await db.from("wiki_page_categories").select("category_id").eq("page_id",p.id);
+  const ids=(links||[]).map(x=>x.category_id),{data:cats}=ids.length?await db.from("wiki_categories").select("name").in("id",ids):{data:[]};
+  catHtml=(cats||[]).map(c=>'<span class="article-category">'+esc(c.name)+'</span>').join("");
+ }
+ $("article-content").innerHTML='<div class="wiki-article"><h1>'+esc(p.title)+'</h1><div class="article-source">'+(p.updated_at?"Updated "+esc(dateText(p.updated_at))+" · ":"")+(catHtml||"Uncategorised")+'</div><div class="wiki-body">'+renderWikitext(p.content_wikitext||"")+'</div><div class="article-source">Independent community wiki · Tower Defense Simulator belongs to its respective creators.</div></div>';
  $("article-content").querySelectorAll("[data-wiki-link]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();openArticle(a.dataset.wikiLink);}));
  history.replaceState(null,"","#article/"+encodeURIComponent(p.slug));window.scrollTo({top:0,behavior:"smooth"});
 }
