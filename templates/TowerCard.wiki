@@ -1,10 +1,12 @@
 <article class="tower-card">
-  <div class="tower-card-image"><img src="https://tds.wiki/images/{{{image|}}}" alt="{{{1|Tower}}}" loading="lazy" onerror="this.style.display='none'"></div>
+  <div class="tower-card-image"><img src="https://tds.wiki/images/{{{image|}}}" alt="{{{1|Tower}}}" loading="lazy"></div>
   <div class="tower-card-info">
     <span class="tower-card-tier">{{{tier|Tower}}}</span>
     <strong class="tower-card-name">[[{{{1|Unknown}}}]]</strong>
-    <div class="tower-card-unlock">{{#if:{{{unlock|}}}|Unlock: {{{unlock}}}|}}</div>
-    <div class="tower-card-cost">{{#if:{{{price|}}}|Cost: {{{price}}} {{{currency|Coins}}}|{{{label|}}}}}</div>
+    <div class="tower-card-unlock">Unlock: {{{unlock|See article}}}</div>
+    <div class="tower-card-cost">Cost: {{{price|Not listed}}} {{{currency|Coins}}}</div>
+    <div class="tower-card-extra">Additional: {{{price2|—}}} {{{currency2|}}}</div>
+    <div class="tower-card-requirement">Requirement: {{{req|None listed}}}</div>
     <div class="tower-card-note">{{{note|}}}</div>
   </div>
 </article>
