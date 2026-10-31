@@ -1,0 +1,1 @@
+<nav class="browse-nav-box" aria-label="Browse wiki"><strong>Explore the wiki</strong><a href="#browse" data-wiki-link="towers">Towers</a><a href="#browse" data-wiki-link="enemies">Enemies</a><a href="#browse" data-wiki-link="maps">Maps</a><a href="#browse" data-wiki-link="gamemodes">Gamemodes</a><a href="#browse" data-wiki-link="codes">Codes</a></nav>

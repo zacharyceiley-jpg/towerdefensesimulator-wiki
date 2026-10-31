@@ -1,6 +1,0 @@
-<div class="tower-card-grid">
-{{TowerCard|Pulse Trooper|tier=Intermediate|image=DefaultPulseTrooperIconIG.png|price=3,250}}
-{{TowerCard|Engineer|tier=Hardcore|image=EngineerIcon.png|req=Lv 50|currency=Gems|price=4,500|currency2=Robux|price2=…}}
-{{TowerCard|Operator|tier=Evolved|req=Lv 20 [[Scout]]|cost=4,500 Gems + 15,000 Coins}}
-{{TowerCard|Commando|tier=Exclusive|unlock=Area 51|note=Unlocked from [[Area 51]].}}
-</div>

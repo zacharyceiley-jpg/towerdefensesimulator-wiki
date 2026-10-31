@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "name": "TowerCard",
+    "slug": "tower-card",
+    "summary": "Displays an individual tower card.",
+    "path": "templates/TowerCard.wiki"
+  },
+  {
+    "name": "Color",
+    "slug": "color",
+    "summary": "Displays a rarity or section label.",
+    "path": "templates/Color.wiki"
+  },
+  {
+    "name": "BrowseNavBox",
+    "slug": "browse-nav-box",
+    "summary": "Displays links to other wiki browse pages.",
+    "path": "templates/BrowseNavBox.wiki"
+  }
+]

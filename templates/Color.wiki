@@ -1,0 +1,1 @@
+<span class="rarity-label rarity-{{{1|common}}}">{{{2|}}}</span>

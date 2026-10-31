@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "title": "Towers",
+    "slug": "towers",
+    "summary": "An overview of the towers available in Tower Defense Simulator, including their unlock methods and categories.",
+    "categories": [
+      "Browse",
+      "Towers"
+    ],
+    "path": "articles/Towers.wiki"
+  }
+]

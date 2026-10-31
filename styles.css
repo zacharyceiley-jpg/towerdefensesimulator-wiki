@@ -192,3 +192,20 @@ footer a{color:#a5baff}
 .stats{margin-top:5px}
 @media(max-width:900px){.explore-bento{grid-template-columns:repeat(3,minmax(0,1fr))}.explore-towers{grid-column:span 2;grid-row:span 2}.shortcut-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.quicklinks{align-items:flex-start;flex-direction:column}.quicklinks-list{justify-content:flex-start}}
 @media(max-width:650px){.official-hero{margin-top:12px;padding:38px 14px 30px}.official-hero h1{letter-spacing:-1.6px}.hero-game-label{font-size:8px;letter-spacing:1.2px}.quicklinks{margin:15px 0 42px;padding:14px}.quicklinks-list{gap:6px}.quicklinks-list a{font-size:9px;padding:7px}.explore-heading{align-items:flex-start;flex-direction:column}.explore-bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto}.explore-card{min-height:150px;padding:13px}.explore-towers{grid-column:span 2;grid-row:auto;min-height:210px}.explore-towers .explore-card-copy strong{font-size:29px}.explore-card-icon{width:37px;height:37px;font-size:20px}.shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shortcut-grid a{display:flex;align-items:center;justify-content:flex-start;padding:12px}.shortcut-grid a span{width:26px;text-align:center}.stats{margin-bottom:30px}}
+
+/* Repository wikitext tower cards */
+.wiki-body .tower-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:13px;margin:16px 0 30px}
+.wiki-body .tower-card{display:flex;align-items:center;gap:12px;min-width:0;padding:13px;border:1px solid #34445e;border-radius:12px;background:linear-gradient(145deg,#1b2940,#111a29);color:#e8efff}
+.wiki-body .tower-card-image{display:grid;place-items:center;flex:0 0 74px;width:74px;height:74px;overflow:hidden;border-radius:9px;background:#0b1220}
+.wiki-body .tower-card-image img{max-width:100%;max-height:100%;object-fit:contain}
+.wiki-body .tower-card-info{display:grid;gap:4px;min-width:0}
+.wiki-body .tower-card-tier{color:#9fb4da;font-size:9px;text-transform:uppercase;letter-spacing:.8px;font-weight:800}
+.wiki-body .tower-card-name{font-size:15px}
+.wiki-body .tower-card-unlock,.wiki-body .tower-card-cost,.wiki-body .tower-card-note{font-size:10px;color:#b2c0d6;line-height:1.4}
+.wiki-body .rarity-label{display:inline-flex;padding:5px 10px;border-radius:6px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;background:#555;color:#fff}
+.wiki-body .rarity-common{background:#737b89}.wiki-body .rarity-uncommon{background:#b68d24}.wiki-body .rarity-rare{background:#4e9dc9}.wiki-body .rarity-legendary{background:#8656c8}.wiki-body .rarity-golden{background:linear-gradient(100deg,#a86b00,#ffe36b,#a86b00);color:#241700}.wiki-body .rarity-event{background:#cf4242}.wiki-body .rarity-exclusive{background:linear-gradient(100deg,#a91e35,#f04a58,#a91e35)}.wiki-body .rarity-ultimate{background:linear-gradient(100deg,#c54cae,#f7a6e8,#c54cae);color:#31132b}
+.wiki-body .browse-nav-box{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:22px 0;padding:14px;border:1px solid #34445e;border-radius:10px;background:#111a29}
+.wiki-body .browse-nav-box strong{margin-right:8px}.wiki-body .browse-nav-box a{padding:6px 9px;border-radius:6px;background:#202e45;color:#c9d9f7;font-size:12px}
+.wiki-body .mainheader{display:block;margin:22px 0 10px;font-size:24px;font-weight:900}
+.wiki-body .wiki-reference{color:#9db5e7;font-size:10px}
+@media(max-width:600px){.wiki-body .tower-card-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.wiki-body .tower-card{padding:9px;gap:8px}.wiki-body .tower-card-image{flex-basis:55px;width:55px;height:55px}}

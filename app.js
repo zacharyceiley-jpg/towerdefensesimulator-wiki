@@ -126,7 +126,8 @@ function expandTemplates(source,depth=0){
  });
 }
 function renderWikitext(source){
- const lines=expandTemplates(source).replace(/\r/g,"").split("\n");let html="",para=[],listType=null,items=[];
+ const prepared=expandTemplates(String(source||"")).replace(/<references\s*\/>/gi,"").replace(/<ref(?:\s+[^>]*)?>([\s\S]*?)<\/ref>/gi,"<sup class=\"wiki-reference\">($1)</sup>");
+ const lines=prepared.replace(/\r/g,"").split("\n");let html="",para=[],listType=null,items=[];
  const flushP=()=>{if(para.length){html+="<p>"+inlineMarkup(para.join(" "))+"</p>";para=[];}};
  const flushL=()=>{if(items.length){html+="<"+listType+">"+items.map(x=>"<li>"+inlineMarkup(x)+"</li>").join("")+"</"+listType+">";items=[];listType=null;}};
  for(const raw of lines){
@@ -138,10 +139,11 @@ function renderWikitext(source){
   if(li){flushP();const type=li[1][0]==="#"?"ol":"ul";if(listType&&listType!==type)flushL();listType=type;items.push(li[2]);continue;}
   flushL();para.push(line);
  }
- flushP();flushL();return html||"<p>This article is empty.</p>";
+ flushP();flushL();html=html||"<p>This article is empty.</p>";
+ return window.DOMPurify?window.DOMPurify.sanitize(html,{ADD_ATTR:["class","target","rel","loading","data-wiki-link"],ADD_TAGS:["article","nav","img","sup"]}):esc(html);
 }
 function inlineMarkup(value){
- let out=esc(value);
+ let out=String(value??"");
  out=out.replace(/\[\[([^\]]+)\]\]/g,(_m,raw)=>{const bits=raw.split("|"),title=bits[0].trim(),label=bits[1]?.trim()||title;return '<a href="#article/'+encodeURIComponent(slugify(title))+'" data-wiki-link="'+esc(slugify(title))+'">'+label+'</a>';});
  out=out.replace(/\[(https?:\/\/[^\s\]]+)(?:\s+([^\]]+))?\]/g,(_m,url,label)=>'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+(label||url)+'</a>');
  out=out.replace(/'''(.*?)'''/g,"<strong>$1</strong>").replace(/''(.*?)''/g,"<em>$1</em>");
