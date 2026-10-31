@@ -1,0 +1,140 @@
+<div class="align-center"><span class="mainheader">'''Towers'''</span>
+----
+'''Towers''' are, for the most part, the main way to counter [[enemies]]. They are essential to a player's loadout and gameplay. Each tower has its own set of abilities, purchase cost and upgrades associated to that particular tower.
+
+Most towers are offensive towers. However, some may provide support in its own way. Each have their own strategy associated to them and most towers can reach their full potential when combined with other towers or fighting against specific types of enemies.
+
+In [[PVP]] mode, golden perks and exclusive towers are unable to be equipped. A large number of the available towers in [[PVP]]  mode also use different statistics.
+
+<span class="mainheader">{{Color|Common|Starter}}</span>
+<div class="tower-card-grid">
+{{TowerCard|Scout|tier=Starter|image=DefaultScout0.png|unlock=Free}}
+{{TowerCard|Sniper|tier=Starter|image=DefaultSniper0.png|unlock=Free}}
+{{TowerCard|Paintballer|tier=Starter|image=DefaultPaintballer0.png|price=100}}
+{{TowerCard|Demoman|tier=Starter|image=DefaultDemoman0.png|price=200}}
+{{TowerCard|Boomerang|tier=Starter|image=DefaultBoomerang0.png|price=300}}
+{{TowerCard|Slime Trooper|tier=Starter|image=DefaultSlimeTrooper0.png|price=300}}
+{{TowerCard|Soldier|tier=Starter|image=DefaultSoldier0.png|price=350}}
+</div>
+
+
+<span class="mainheader">{{Color|Uncommon|Intermediate}}</span>
+<div class="tower-card-grid">
+{{TowerCard|Freezer|tier=Intermediate|image=DefaultFreezer0.png|price=650}}
+{{TowerCard|Assassin|tier=Intermediate|image=DefaultAssassin0.png|price=800}}
+{{TowerCard|Militant|tier=Intermediate|image=DefaultMilitant0.png|price=800|unlock2=Starter Bundle}}
+{{TowerCard|Shotgunner|tier=Intermediate|image=DefaultShotgunner0.png|price=850}}
+{{TowerCard|Hunter|tier=Intermediate|image=DefaultHunter0.png|price=1,000}}
+{{TowerCard|Pyromancer|tier=Intermediate|image=DefaultPyromancer0.png|price=1,250}}
+{{TowerCard|Ace Pilot|tier=Intermediate|image=AcePilotNewIcon.png|price=1,500}}
+{{TowerCard|Medic|tier=Intermediate|image=DefaultMedic0.png|price=2,000}}
+{{TowerCard|Farm|tier=Intermediate|image=DefaultFarmIcon.png|price=2,000}}
+{{TowerCard|Electroshocker|tier=Intermediate|image=DefaultElectroshocker0.png|price=2,500}}
+{{TowerCard|Rocketeer|tier=Intermediate|image=DefaultRocketeer0.png|price=2,500}}
+{{TowerCard|Trapper|tier=Intermediate|image=TrapperIcon.png|price=3,000}}
+{{TowerCard|Pulse Trooper|tier=Intermediate|image=DefaultPulseTrooperIconIG.png|price=3,250}}
+{{TowerCard|Military Base|tier=Intermediate|image=DefaultMilitaryBaseIconM29.png|price=4,000}}
+{{TowerCard|Crook Boss|tier=Intermediate|image=CBRCBossIcon.png|unlock=Level 30|price2=225|currency2=Robux}}
+</div>
+
+
+<span class="mainheader">{{Color|Rare|Advanced}}</span>
+<div class="tower-card-grid">
+{{TowerCard|Commander|tier=Advanced|image=Commandernew.png|price=4,000}}<!--The icon with the correct face is File:CommanderIconInGame.png-->
+{{TowerCard|Warden|tier=Advanced|image=Warden.png|price=4,000|price2=450|currency2=Robux|note=Unlocks in the store after triumphing [[Pizza Party]].}}
+{{TowerCard|Cowboy|tier=Advanced|image=WDDefaultCowboyIcon.png|price=4,000|price2=340|currency2=Robux|note=Unlocks in the store after triumphing [[Badlands II]].<ref>Formerly obtained by triumphing [[End of the Line]] or [[Badlands]].</ref>}}
+{{TowerCard|DJ Booth|tier=Advanced|image=DefaultDJBoothIconAug2024.png|price=5,000}}
+{{TowerCard|Tesla|tier=Advanced|image=TeslaIcon.png|price=6,000}}
+{{TowerCard|Saboteur|tier=Advanced|image=SaboteurIcon.png|price=7,500|price2=449|currency2=Robux|note=Unlocks in the store after triumphing [[Polluted Wasteland II]].}}
+{{TowerCard|Minigunner|tier=Advanced|image=NewMinigunner.png|price=8,000}}
+{{TowerCard|Ranger|tier=Advanced|image=Newranger.png|price=12,000}}
+{{TowerCard|Pursuit|tier=Advanced|image=PursuitNewIcon.png|price=15,000|price2=1,500|currency2=Robux|req=Lv 100}}
+{{TowerCard|Gatling Gun|tier=Advanced|image=GatlingGunIcon.png|price=35,000|price2=1,949|currency2=Robux|req=Lv 175}}
+{{TowerCard|Turret|tier=Advanced|image=TurretIcon.png|unlock=Level 50|price2=340|currency2=Robux}}
+{{TowerCard|Mortar|tier=Advanced|image=MortarIcon.png|unlock=Level 75|price2=300|currency2=Robux}}
+{{TowerCard|Mercenary Base|tier=Advanced|image=DefaultMercenaryBaseIcon.png|unlock=Level 150|price2=1,350|currency2=Robux}}
+</div>
+
+
+<span class="mainheader">{{Color|HardcoreMode|Hardcore}}</span>
+<div class="tower-card-grid">
+{{TowerCard|Brawler|tier=Hardcore|image=BrawlerFromTDS.png|price=1,250|currency=Gems|req=Lv 50}}
+{{TowerCard|Necromancer|tier=Hardcore|image=NecromancerTowerIcon.png|price=2,250|currency=Gems|req=Lv 50}}
+{{TowerCard|Accelerator|tier=Hardcore|image=DefaultAcceleratorIcon2.png|price=2,500|currency=Gems|req=Lv 50}}
+{{TowerCard|Engineer|tier=Hardcore|image=EngineerIcon.png|price=4,500|currency=Gems|price2=1,690|currency2=Robux|req=Lv 50}}
+{{TowerCard|Hacker|tier=Hardcore|image=HackerIcon.png|price=5,500|currency=Gems|price2=2,249|currency2=Robux|req=Lv 50}}
+</div>
+
+
+<span class="mainheader">{{Color|Rare|Evolved}}</span>
+<div class="tower-card-grid">
+{{TowerCard|Operator|tier=Evolved|image=DefaultOperator0.png|price=4,500|currency=Gems|price_b=15,000|currency_b=Coins|req=Lv 20 [[Scout]]}}
+{{TowerCard|Enforcer|tier=Evolved|image=DefaultEnforcer0.png|price=4,750|currency=Gems|price_b=15,000|currency_b=Coins|req=Lv 20 [[Shotgunner]]}}
+{{TowerCard|Kingpin|tier=Evolved|image=DefaultKingpin0.png|price=5,500|currency=Gems|price_b=15,000|currency_b=Coins|req=Lv 20 [[Crook Boss]]}}
+{{TowerCard|Juggernaut|tier=Evolved|image=DefaultJuggernaut0.png|price=6,000|currency=Gems|price_b=15,000|currency_b=Coins|req=Lv 20 [[Minigunner]]}}
+</div>
+
+
+<span class="mainheader">{{Color|Golden|Golden Perks}}</span>
+<div class="tower-card-grid">
+{{TowerCard|Golden Minigunner|tier=Golden|image=Goldenminigunner.png|label=Golden Perk|currency=none}}
+{{TowerCard|Golden Pyromancer|tier=Golden|image=GoldenPyromancer0.png|label=Golden Perk|currency=none}}
+{{TowerCard|Golden Crook Boss|tier=Golden|image=NewGoldenCrookBoss.png|label=Golden Perk|currency=none}}
+{{TowerCard|Golden Scout|tier=Golden|image=GoldenScout0.png|label=Golden Perk|currency=none}}
+{{TowerCard|Golden Cowboy|tier=Golden|image=WDGoldenCowboyIcon.png|label=Golden Perk|currency=none}}
+{{TowerCard|Golden Soldier|tier=Golden|image=GoldenSoldier0.png|label=Golden Perk|currency=none}}
+{{TowerCard|Golden Demoman|tier=Golden|image=GoldenDemoman0.png|label=Golden Perk|currency=none}}
+{{TowerCard|Golden Snowballer|tier=Golden|image=GoldenSnowballer.png|label=Golden Perk|currency=none|note=Developer-only perk.}}
+</div>
+
+
+<span class="mainheader">{{Color|Ultimate|Exclusive}}</span>
+<div class="tower-card-grid">
+{{TowerCard|Gladiator|tier=Exclusive|image=DefaultGladiatorRework0.png|unlock=The Heights|note=Only obtainable during the [[SFOTH Event]].}}
+{{TowerCard|Commando|tier=Exclusive|image=DefaultCommando0.png|unlock=Area 51|note=Only obtainable before the 20th of September 2019}}
+{{TowerCard|Slasher|tier=Exclusive|image=DefaultSlasher0.png|unlock=Nightmare Carnival|note=Only obtainable during the [[Halloween 2019 Event]].}}
+{{TowerCard|Frost Blaster|tier=Exclusive|image=DefaultFrostBlaster0.png|unlock=Village of Despair}}
+{{TowerCard|Archer|tier=Exclusive|image=DefaultArcher0.png|unlock=Gift of Sharpness}}
+{{TowerCard|Swarmer|tier=Exclusive|image=DefaultSwarmer0.png|unlock=Eggy Island|note=Hard difficulty only.}}
+{{TowerCard|Toxic Gunner|tier=Exclusive|image=DefaultToxicGunner0.png|unlock=Trick or Threat Town}}
+{{TowerCard|Sledger|tier=Exclusive|image=DefaultSledger0.png|unlock=Outpost 32|note=Specifically obtained from the [[Frost Invasion Event]] [[Outpost 32 (Frost Invasion)|Outpost 32]].}}
+{{TowerCard|Executioner|tier=Exclusive|image=DefaultExecutioner0.png|unlock=Solar Eclipse Event|note=All of the [[Solar Eclipse Event]] nights have to be beaten.}}
+{{TowerCard|Elf Camp|tier=Exclusive|image=DefaultElfCamp0.png|unlock=Cold Ambush|note=Only obtainable during the [[Violent Night Event]].}}
+{{TowerCard|Jester|tier=Exclusive|image=JesterIcon.png|unlock=Lunar Overture Event|note=All of the [[Lunar Overture Event]] acts have to be beaten.}}
+{{TowerCard|Cryomancer|tier=Exclusive|image=OICECryomancerIcon.png|unlock=Krampus Frosthold}}
+{{TowerCard|Hallow Punk|tier=Exclusive|image=HallowPunkIcon.png|unlock=Hexscape Event|note=All [[Hexscape Event]] nights must be triumphed on Easy difficulty.}}
+{{TowerCard|Harvester|tier=Exclusive|image=HarvesterIcon.png|unlock=Hexscape Event|note=All [[Hexscape Event]] nights must be triumphed on Hard difficulty.}}
+{{TowerCard|Snowballer|tier=Exclusive|image=SnowballerIcon.png|unlock=Outpost 32|note=Easy difficulty only.}}
+{{TowerCard|Elementalist|tier=Exclusive|image=ElementalistIcon.png|unlock=Outpost 32|note=Hard difficulty only.}}
+{{TowerCard|Firework Technician|tier=Exclusive|image=FireworkTechnicianIcon.png|unlock=Mission Quests|note=Unlocked from ''🇺🇸 Rise for the Pledge!'' and the ''Happy New Years!'' quests. Neither is active.}}
+{{TowerCard|Biologist|tier=Exclusive|image=BiologistIcon.png|unlock=Bathroom Approach|note=Hard difficulty only.}}
+{{TowerCard|Warlock|tier=Exclusive|image=WarlockNewIcon.png|unlock=Null & Void Event|note=All [[Null & Void Event]] nights must be triumphed on Hard difficulty.}}
+{{TowerCard|Spotlight Tech|tier=Exclusive|image=SpotlightTechIcon.png|unlock=The Narratorium|note=Hard difficulty only.}}
+{{TowerCard|Star Cannon|tier=Exclusive|image=DefaultStarCannon0.png|unlock=Solar Requiem Event|note=All [[Solar Requiem Event]] nights must be triumphed on Hard difficulty.}}
+{{TowerCard|War Machine|tier=Exclusive|image=DefaultWarMachineRework0.png|note=Primarily given for contributions or by being a Discord Moderator or higher.<ref>On rare occassions, it is also given to others. These two are the primary unlock methods.</ref>|currency=none}}
+{{TowerCard|Mecha Base|tier=Exclusive|image=OUMechaBaseIcon.png|note=Given to Discord Administrators and higher.<ref>This is the primary unlock method. On rare occasions it has been given to other people.</ref>|currency=none}}
+</div>
+
+
+<span class="mainheader">{{Color|Event|Unavailable}}</span>
+<div class="tower-card-grid">
+{{TowerCard|Mine|tier=Unavailable|image=MineTower.png|currency=none}}
+{{TowerCard|Sentry|tier=Unavailable|image=Sentry.png|currency=none}}
+{{TowerCard|Moderator|tier=Unavailable|image=ModeratorIcon.png|currency=none}}
+{{TowerCard|Railgunner|tier=Unavailable|image=DefaultRailgunnerIcon.png|currency=none}}
+{{TowerCard|Twitgunner|tier=Unavailable|image=DefaultTwitgunnerIcon.png|currency=none}}
+{{TowerCard|Void Miner|tier=Unavailable|image=VoidMinerIcon.png|currency=none}}
+{{TowerCard|Combatant|tier=Unavailable|image=DefaultCombatantIcon.png|currency=none}}
+{{TowerCard|Crystallizer|tier=Unavailable|image=Crystallizer.png|currency=none}}
+{{TowerCard|Time Dilator|tier=Unavailable|image=TimeDilator.png|currency=none}}
+</div>
+</div>
+
+
+----
+<references/>
+
+
+
+{{BrowseNavBox}}
+[[Category:Browse]]
