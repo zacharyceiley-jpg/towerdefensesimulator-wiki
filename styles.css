@@ -143,3 +143,52 @@ footer a{color:#a5baff}
 .missing-template{display:inline-block;color:#ffba91;border:1px dashed #8e5b43;border-radius:5px;padding:1px 5px}
 .wiki-body .missing-template{color:#ffba91}
 @media(max-width:760px){.auth-tools{gap:6px}.auth-tools #auth-label{display:none}.article-toolbar{align-items:flex-start}.article-toolbar>div{flex-wrap:wrap}.editor-panel{margin:18px 0}.revision-row{align-items:flex-start;flex-direction:column;gap:4px}}
+
+/* Homepage recreation inspired by the official TDS Wiki layout */
+.topbar{gap:28px}.brand{line-height:1.15}.brand>span:last-child{font-size:12px}.brand small{margin-top:5px}
+.official-hero{position:relative;isolation:isolate;overflow:hidden;margin-top:22px;padding:55px 20px 44px;border:1px solid #293954;border-radius:22px;background:radial-gradient(ellipse at 50% 0%,#304b78aa,transparent 55%),linear-gradient(145deg,#141f33,#0e1522 72%);box-shadow:0 25px 80px #0004}
+.official-hero:before,.official-hero:after{content:"";position:absolute;z-index:-1;border:1px solid #8faeff20;border-radius:50%;width:440px;height:440px;top:-280px;left:calc(50% - 220px)}
+.official-hero:after{width:600px;height:600px;top:-360px;left:calc(50% - 300px)}
+.hero-brandline{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:18px}
+.hero-emblem{display:grid;place-items:center;width:44px;height:44px;border-radius:13px;background:linear-gradient(145deg,#b4caff,#74dfd2);color:#111a2a;font-size:14px;font-weight:1000;box-shadow:0 8px 25px #8aaeff44}
+.hero-game-label{font-size:10px;font-weight:900;letter-spacing:2px;color:#c1cce0}
+.official-hero .eyebrow{background:#18253a;border-color:#394c6c}
+.official-hero h1{font-size:clamp(34px,5.2vw,58px);letter-spacing:-2.5px;margin:18px 0 13px}
+.official-hero h1 span{background:linear-gradient(90deg,#a9c1ff,#8ce7d8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.official-hero>p{font-size:14px;color:#aebbd0}
+.official-hero .searchbar{margin-top:25px;background:#0b1220;border-color:#405477;max-width:650px}
+.official-hero .hero-actions{margin-top:20px}.official-hero .hero-meta{margin-top:22px}
+.quicklinks{display:flex;align-items:center;justify-content:space-between;gap:22px;margin:25px 0 62px;padding:17px 20px;border:1px solid #28364e;border-radius:13px;background:#111a29}
+.quicklinks-heading{display:grid;gap:3px;white-space:nowrap}.quicklinks-caption{font-size:10px;color:#7f90aa}
+.quicklinks-list{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.quicklinks-list a{display:flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid #2a3a54;border-radius:8px;background:#151f30;color:#c6d3e9;font-size:10px;font-weight:700}
+.quicklinks-list a span{color:#9db8ff;font-size:13px}.quicklinks-list a:hover{border-color:#7e9ee2;background:#1a2941}
+.explore-section{padding:0 0 48px}.explore-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.explore-heading h2,.shortcut-section h2{margin:5px 0 0;font-size:26px;letter-spacing:-.8px}.explore-heading p{margin:5px 0 0;color:#91a0b8;font-size:11px}
+.view-all-link{color:#a8c0ff;font-size:11px;font-weight:800;white-space:nowrap}.view-all-link span{margin-left:5px}
+.explore-bento{display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr;grid-template-rows:repeat(2,minmax(145px,auto));gap:11px}
+.explore-card{position:relative;display:flex;align-items:flex-end;gap:14px;min-width:0;overflow:hidden;padding:18px;border:1px solid #34445e;border-radius:14px;background:linear-gradient(145deg,#1b2b45,#111a29);transition:transform .16s,border-color .16s}
+.explore-card:before{content:"";position:absolute;width:180px;height:180px;right:-65px;top:-85px;border-radius:50%;background:#a4bcff10;pointer-events:none}
+.explore-card:hover{transform:translateY(-3px);border-color:#829ed5}
+.explore-towers{grid-column:span 2;grid-row:span 2;min-height:300px;background:radial-gradient(ellipse at 80% 15%,#496b9b77,transparent 48%),linear-gradient(145deg,#243a5b,#111a29)}
+.explore-card-icon{position:absolute;right:18px;top:17px;display:grid;place-items:center;width:45px;height:45px;border:1px solid #718dbb55;border-radius:13px;background:#a5bdff12;color:#c1d3ff;font-size:24px}
+.explore-towers .explore-card-icon{width:76px;height:76px;right:25px;top:25px;font-size:42px}
+.explore-card-copy{position:relative;z-index:1;display:grid;gap:5px;max-width:100%}
+.explore-card-copy small{font-size:8px;font-weight:900;letter-spacing:1.4px;color:#91a9d2}
+.explore-card-copy strong{font-size:20px;line-height:1.1;letter-spacing:-.5px;color:#f0f4ff}
+.explore-card-copy>span{max-width:260px;color:#a2b0c7;font-size:10px;line-height:1.5}
+.explore-towers .explore-card-copy strong{font-size:34px}.explore-towers .explore-card-copy>span{font-size:12px}
+.explore-arrow{position:absolute;right:16px;bottom:15px;color:#9db5e7;font-size:17px}
+.explore-enemies{background:linear-gradient(145deg,#392b3b,#171927)}.explore-enemies .explore-card-icon{color:#f3b6bd}
+.explore-maps{background:linear-gradient(145deg,#1e3c43,#111a29)}.explore-maps .explore-card-icon{color:#9ce4d8}
+.explore-modes{background:linear-gradient(145deg,#3b3423,#191a22)}.explore-modes .explore-card-icon{color:#e8cf91}
+.explore-units{background:linear-gradient(145deg,#2d3150,#141a2a)}.explore-missions{background:linear-gradient(145deg,#243d36,#111a29)}
+.explore-events{background:linear-gradient(145deg,#433047,#171927)}.explore-codes{background:linear-gradient(145deg,#293c4d,#111a29)}
+.shortcut-section{padding:0 0 48px}.shortcut-section h2{margin-bottom:16px}
+.shortcut-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}
+.shortcut-grid a{display:grid;justify-items:center;gap:9px;padding:15px 8px;border:1px solid #2a3850;border-radius:11px;background:#121b2a;color:#c6d3e8;transition:transform .15s,border-color .15s}
+.shortcut-grid a:hover{transform:translateY(-2px);border-color:#7d98ce}
+.shortcut-grid a span{font-size:22px;color:#9eb8f2}.shortcut-grid a b{font-size:10px}
+.stats{margin-top:5px}
+@media(max-width:900px){.explore-bento{grid-template-columns:repeat(3,minmax(0,1fr))}.explore-towers{grid-column:span 2;grid-row:span 2}.shortcut-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.quicklinks{align-items:flex-start;flex-direction:column}.quicklinks-list{justify-content:flex-start}}
+@media(max-width:650px){.official-hero{margin-top:12px;padding:38px 14px 30px}.official-hero h1{letter-spacing:-1.6px}.hero-game-label{font-size:8px;letter-spacing:1.2px}.quicklinks{margin:15px 0 42px;padding:14px}.quicklinks-list{gap:6px}.quicklinks-list a{font-size:9px;padding:7px}.explore-heading{align-items:flex-start;flex-direction:column}.explore-bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto}.explore-card{min-height:150px;padding:13px}.explore-towers{grid-column:span 2;grid-row:auto;min-height:210px}.explore-towers .explore-card-copy strong{font-size:29px}.explore-card-icon{width:37px;height:37px;font-size:20px}.shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shortcut-grid a{display:flex;align-items:center;justify-content:flex-start;padding:12px}.shortcut-grid a span{width:26px;text-align:center}.stats{margin-bottom:30px}}
