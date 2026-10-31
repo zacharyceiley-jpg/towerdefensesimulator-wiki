@@ -1,9 +1,9 @@
 -- Clean TDS wiki reset, GitHub identity check, owner-only editing, and templates.
 begin;
-truncate table public.wiki_page_revisions, public.wiki_page_categories, public.wiki_pages, public.wiki_categories restart identity cascade;
 create schema if not exists private;
 revoke all on schema private from public, anon;
 grant usage on schema private to authenticated;
+alter function public.wiki_set_updated_at() set search_path = pg_catalog;
 create or replace function private.is_tds_wiki_owner()
 returns boolean language sql stable security definer set search_path = pg_catalog, auth
 as $$
@@ -36,11 +36,23 @@ drop policy if exists "Authenticated users can add revisions" on public.wiki_pag
 create policy "Only Zac can create wiki pages" on public.wiki_pages for insert to authenticated with check ((select public.is_tds_wiki_owner()));
 create policy "Only Zac can edit wiki pages" on public.wiki_pages for update to authenticated using ((select public.is_tds_wiki_owner())) with check ((select public.is_tds_wiki_owner()));
 create policy "Only Zac can delete wiki pages" on public.wiki_pages for delete to authenticated using ((select public.is_tds_wiki_owner()));
-create policy "Only Zac can manage wiki categories" on public.wiki_categories for all to authenticated using ((select public.is_tds_wiki_owner())) with check ((select public.is_tds_wiki_owner()));
-create policy "Only Zac can manage page categories" on public.wiki_page_categories for all to authenticated using ((select public.is_tds_wiki_owner())) with check ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can create wiki categories" on public.wiki_categories for insert to authenticated with check ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can update wiki categories" on public.wiki_categories for update to authenticated using ((select public.is_tds_wiki_owner())) with check ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can delete wiki categories" on public.wiki_categories for delete to authenticated using ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can create page categories" on public.wiki_page_categories for insert to authenticated with check ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can update page categories" on public.wiki_page_categories for update to authenticated using ((select public.is_tds_wiki_owner())) with check ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can delete page categories" on public.wiki_page_categories for delete to authenticated using ((select public.is_tds_wiki_owner()));
 create policy "Only Zac can add revisions" on public.wiki_page_revisions for insert to authenticated with check ((select public.is_tds_wiki_owner()));
 create policy "Public can read wiki templates" on public.wiki_templates for select using (true);
-create policy "Only Zac can manage wiki templates" on public.wiki_templates for all to authenticated using ((select public.is_tds_wiki_owner())) with check ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can create wiki templates" on public.wiki_templates for insert to authenticated with check ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can update wiki templates" on public.wiki_templates for update to authenticated using ((select public.is_tds_wiki_owner())) with check ((select public.is_tds_wiki_owner()));
+create policy "Only Zac can delete wiki templates" on public.wiki_templates for delete to authenticated using ((select public.is_tds_wiki_owner()));
 grant select on public.wiki_templates to anon, authenticated;
 grant insert, update, delete on public.wiki_templates to authenticated;
+create index if not exists wiki_page_categories_category_id_idx on public.wiki_page_categories(category_id);
+create index if not exists wiki_page_revisions_editor_id_idx on public.wiki_page_revisions(editor_id);
+create index if not exists wiki_pages_created_by_idx on public.wiki_pages(created_by);
+create index if not exists wiki_pages_updated_by_idx on public.wiki_pages(updated_by);
+create index if not exists wiki_templates_created_by_idx on public.wiki_templates(created_by);
+create index if not exists wiki_templates_updated_by_idx on public.wiki_templates(updated_by);
 commit;
