@@ -209,3 +209,13 @@ footer a{color:#a5baff}
 .wiki-body .mainheader{display:block;margin:22px 0 10px;font-size:24px;font-weight:900}
 .wiki-body .wiki-reference{color:#9db5e7;font-size:10px}
 @media(max-width:600px){.wiki-body .tower-card-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.wiki-body .tower-card{padding:9px;gap:8px}.wiki-body .tower-card-image{flex-basis:55px;width:55px;height:55px}}
+
+/* Capitalized names passed by the wiki Color template */
+.wiki-body .rarity-Common{background:#737b89}
+.wiki-body .rarity-Uncommon{background:#b68d24}
+.wiki-body .rarity-Rare{background:#4e9dc9}
+.wiki-body .rarity-Legendary{background:#8656c8}
+.wiki-body .rarity-Golden{background:linear-gradient(100deg,#a86b00,#ffe36b,#a86b00);color:#241700}
+.wiki-body .rarity-Event{background:#cf4242}
+.wiki-body .rarity-Ultimate{background:linear-gradient(100deg,#c54cae,#f7a6e8,#c54cae);color:#31132b}
+.wiki-body .rarity-HardcoreMode{background:#737b89}
