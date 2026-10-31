@@ -1,72 +1,28 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#101522">
-  <meta name="description" content="A community Tower Defense Simulator wiki.">
-  <title>TDS Wiki</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
-  <script defer src="app.js"></script>
-</head>
-<body>
-  <header class="topbar">
-    <a class="brand" href="#" id="home-link" aria-label="TDS Wiki home">
-      <span class="brand-mark">TDS</span><span>TDS <b>Wiki</b><small>COMMUNITY ENCYCLOPEDIA</small></span>
-    </a>
-    <nav><a href="#home" id="nav-home">Home</a><a href="#towers" id="nav-towers">Towers</a><a href="#browse" id="nav-all">All articles</a><a href="#about" id="nav-about">About</a></nav>
-  </header>
-  <main>
-    <section class="hero" id="home">
-      <div class="eyebrow"><span class="pulse"></span> THE TOWER DEFENSE SIMULATOR ENCYCLOPEDIA</div>
-      <h1>Know your towers.<br><span>Master every wave.</span></h1>
-      <p>A community-built reference for towers, enemies, maps, strategies and everything TDS.</p>
-      <form class="searchbar" id="search-form" role="search">
-        <span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search wiki articles">
-        <button type="submit">Search <kbd>↵</kbd></button>
-      </form>
-      <div class="hero-actions"><a class="primary-action" href="#towers" id="hero-towers">Explore Towers <span>↗</span></a><a class="secondary-action" href="#browse" id="hero-all">Browse all articles</a></div>
-      <div class="hero-meta"><span>COMMUNITY KNOWLEDGE</span><span>•</span><span>ARTICLES WITH SOURCES</span></div>
-    </section>
-    <section class="stats" aria-label="Wiki status">
-      <div><strong id="article-count">—</strong><span>ARTICLES</span></div>
-      <div><strong id="category-count">—</strong><span>CATEGORIES</span></div>
-      <div><strong id="wiki-status">Connecting…</strong><span>DATABASE</span></div>
-    </section>
-    <section class="towers-intro" id="towers-intro" hidden>
-      <div class="eyebrow"><span class="pulse"></span> TOWER DATABASE</div>
-      <h1>Meet your <span>towers.</span></h1>
-      <p>Explore tower stats, abilities, upgrades and strategies. Choose an article to open its full page.</p>
-      <div class="tower-quick-stats"><span>STARTER TOWERS</span><span>UPGRADES & ABILITIES</span><span>SOURCE-LINKED ARTICLES</span></div>
-    </section>
-    <section class="content-grid" id="browse">
-      <aside class="sidebar">
-        <div class="section-label">EXPLORE</div>
-        <button class="side-link active" data-view="recent">✦ <span>Recently updated</span></button>
-        <button class="side-link" data-view="all">▦ <span>All articles</span></button>
-        <div class="section-label category-heading">CATEGORIES</div>
-        <div id="category-list" class="category-list"><p class="muted">Loading categories…</p></div>
-        <div class="sidebar-note"><span>✎</span><b>Community project</b><p>Built for TDS players, by TDS players. Source credits stay attached to imported pages.</p></div>
-      </aside>
-      <section class="article-area">
-        <div class="section-head"><div><div class="section-label" id="results-kicker">THE LIBRARY</div><h2 id="results-title">Recently updated</h2></div><span id="results-count" class="muted"></span></div>
-        <div id="notice" class="notice" hidden></div>
-        <div id="article-list" class="article-list"><div class="loading"><span class="spinner"></span> Connecting to the wiki database…</div></div>
-        <div class="pagination"><button id="load-more" hidden>Load more articles <span>↓</span></button></div>
-      </section>
-    </section>
-    <section class="article-view" id="article-view" hidden>
-      <button class="back-button" id="back-button">← Back to articles</button>
-      <article id="article-content"></article>
-    </section>
-    <section id="about" class="about">
-      <div><div class="section-label">ABOUT THIS PROJECT</div><h2>A fresh start for TDS knowledge.</h2></div>
-      <p>This independent community wiki is built from scratch. Imported material keeps a link to its original source and revision information. Tower Defense Simulator and related assets belong to their respective owners.</p>
-    </section>
-  </main>
-  <footer><span>© TDS Wiki Community</span><span>Independent fan project · Not affiliated with Paradoxum Games</span><a href="https://tds.wiki/" target="_blank" rel="noopener noreferrer">Original wiki ↗</a></footer>
-</body>
-</html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101522"><meta name="description" content="A community Tower Defense Simulator wiki.">
+<title>TDS Wiki</title><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script><script defer src="app.js"></script>
+</head><body>
+<header class="topbar"><a class="brand" href="#" id="home-link"><span class="brand-mark">TDS</span><span>TDS <b>Wiki</b><small>COMMUNITY ENCYCLOPEDIA</small></span></a>
+<nav><a href="#home" id="nav-home" class="active-nav">Home</a><a href="#browse" id="nav-all">All articles</a><a href="#templates" id="nav-templates" hidden>Templates</a></nav>
+<div class="auth-tools"><span id="auth-label">Read-only visitor</span><button id="auth-button" class="auth-button">Sign in with GitHub</button></div></header>
+<main>
+<section class="hero" id="home"><div class="eyebrow"><span class="pulse"></span> THE TOWER DEFENSE SIMULATOR ENCYCLOPEDIA</div>
+<h1>Know your towers.<br><span>Master every wave.</span></h1><p>A community-built reference for towers, enemies, maps, strategies and everything TDS.</p>
+<form class="searchbar" id="search-form" role="search"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search wiki articles"><button type="submit">Search <kbd>↵</kbd></button></form>
+<div class="hero-actions"><a class="primary-action" href="#browse" id="hero-all">Browse articles <span>↗</span></a><button class="secondary-action" id="new-page-button" hidden>＋ New article</button></div>
+<div class="hero-meta"><span>WIKITEXT ARTICLES</span><span>•</span><span>PUBLIC READ ACCESS</span><span>•</span><span>OWNER-ONLY EDITING</span></div></section>
+<section class="stats" id="stats" aria-label="Wiki status"><div><strong id="article-count">—</strong><span>ARTICLES</span></div><div><strong id="template-count">—</strong><span>TEMPLATES</span></div><div><strong id="wiki-status">Connecting…</strong><span>DATABASE</span></div></section>
+<section class="content-grid" id="browse"><aside class="sidebar"><div class="section-label">EXPLORE</div><button class="side-link active" data-view="recent">✦ <span>Recently updated</span></button><button class="side-link" data-view="all">▦ <span>All articles</span></button><div class="section-label category-heading">CATEGORIES</div><div id="category-list" class="category-list"><p class="muted">Loading categories…</p></div><div class="sidebar-note"><span>✎</span><b>Single-editor wiki</b><p>Anyone can read the wiki. Only the verified GitHub owner can edit pages and templates.</p></div></aside>
+<section class="article-area"><div class="section-head"><div><div class="section-label" id="results-kicker">THE LIBRARY</div><h2 id="results-title">Recently updated</h2></div><span id="results-count" class="muted"></span></div><div id="notice" class="notice" hidden></div><div id="article-list" class="article-list"><div class="loading"><span class="spinner"></span> Connecting to the wiki database…</div></div><div class="pagination"><button id="load-more" hidden>Load more articles ↓</button></div></section></section>
+<section class="article-view" id="article-view" hidden><div class="article-toolbar"><button class="back-button" id="back-button">← Back to articles</button><div><button id="history-button" class="quiet-button">History</button><button id="edit-page-button" class="quiet-button" hidden>Edit page</button></div></div><article id="article-content"></article><section id="history-panel" class="history-panel" hidden></section></section>
+<section id="editor-panel" class="editor-panel" hidden><div class="section-head"><div><div class="section-label">WIKI EDITOR</div><h2 id="editor-heading">Create article</h2></div><button id="close-editor" class="quiet-button">Close</button></div>
+<form id="page-form"><label>Page title<input id="page-title" required maxlength="120" placeholder="e.g. Scout"></label><label>Short summary<input id="page-summary" maxlength="240" placeholder="A short description shown in search results"></label><label>Categories<input id="page-categories" placeholder="Towers, Starter towers (comma separated)"></label><label>Wikitext<textarea id="page-wikitext" rows="20" spellcheck="false" placeholder="== Overview ==&#10;Use [[Page links]] and {{Template|parameter=value}}."></textarea></label><label>Edit summary<input id="edit-summary" maxlength="180" placeholder="What changed in this edit?"></label><div class="editor-actions"><button type="submit" class="primary-action">Save article</button><button type="button" id="delete-page-button" class="danger-button" hidden>Delete article</button></div></form></section>
+<section id="template-panel" class="editor-panel" hidden><div class="section-head"><div><div class="section-label">TEMPLATE LIBRARY</div><h2>Templates</h2></div><button id="close-templates" class="quiet-button">Close</button></div><p class="muted">Reusable wikitext snippets. Use <code>{{TemplateName|parameter=value}}</code> inside an article.</p><div id="template-list" class="template-list"></div><button id="new-template-button" class="secondary-action">＋ New template</button>
+<form id="template-form" hidden><label>Template name<input id="template-name" required maxlength="80" placeholder="TowerCard"></label><label>Summary<input id="template-summary" maxlength="180"></label><label>Template wikitext<textarea id="template-wikitext" rows="12" spellcheck="false" placeholder="'''{{{name|Tower}}}'''"></textarea></label><div class="editor-actions"><button type="submit" class="primary-action">Save template</button><button type="button" id="cancel-template" class="quiet-button">Cancel</button><button type="button" id="delete-template" class="danger-button" hidden>Delete template</button></div></form></section>
+<section id="about" class="about"><div><div class="section-label">ABOUT THIS PROJECT</div><h2>A fresh start for TDS knowledge.</h2></div><p>This independent community wiki uses a wikitext editor and reusable templates. Tower Defense Simulator and related assets belong to their respective owners.</p></section>
+</main><footer><span>© TDS Wiki Community</span><span>Independent fan project · Not affiliated with Paradoxum Games</span><a href="https://tds.wiki/" target="_blank" rel="noopener noreferrer">Original wiki ↗</a></footer>
+</body></html>
